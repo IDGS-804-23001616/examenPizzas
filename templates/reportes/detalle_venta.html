@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block title %}Detalle de venta{% endblock %}
+
+{% block content %}
+<h1>Detalle de venta #{{ pedido.id }}</h1>
+<p><strong>Cliente:</strong> {{ pedido.cliente.nombre_completo }}</p>
+<p><strong>Direccion:</strong> {{ pedido.cliente.direccion }}</p>
+<p><strong>Telefono:</strong> {{ pedido.cliente.telefono }}</p>
+<p><strong>Fecha del pedido:</strong> {{ pedido.fecha_pedido }}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Tamano</th>
+            <th>Ingredientes</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for detalle in detalles %}
+        <tr>
+            <td>{{ detalle.pizza.tamano|capitalize }}</td>
+            <td>{{ detalle.pizza.ingredientes }}</td>
+            <td>{{ detalle.cantidad }}</td>
+            <td>${{ '%.2f'|format(detalle.subtotal) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p class="total">Total del pedido: ${{ '%.2f'|format(pedido.total) }}</p>
+{% endblock %}

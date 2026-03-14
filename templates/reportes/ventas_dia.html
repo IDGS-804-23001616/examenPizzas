@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block title %}Ventas por dia{% endblock %}
+
+{% block content %}
+<h1>Reporte de ventas por dia de la semana</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Dia</th>
+            <th>Pedidos</th>
+            <th>Total vendido</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in resumen %}
+        <tr>
+            <td>{{ row.dia }}</td>
+            <td>{{ row.total_pedidos }}</td>
+            <td>${{ '%.2f'|format(row.total_ventas) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="section">
+    <h2>Filtrar detalle por dia</h2>
+    <form method="GET">
+        <div class="field" style="max-width: 280px;">
+            <label for="dia">Dia</label>
+            <select id="dia" name="dia">
+                <option value="">Selecciona un dia</option>
+                {% for num, nombre in dias_semana.items() %}
+                    <option value="{{ num }}" {% if dia_filtro == num %}selected{% endif %}>{{ nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">Consultar</button>
+    </form>
+
+    {% if pedidos_filtrados %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID Pedido</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos_filtrados %}
+            <tr>
+                <td>{{ pedido.id }}</td>
+                <td>{{ pedido.fecha_pedido }}</td>
+                <td>${{ '%.2f'|format(pedido.total) }}</td>
+                <td><a href="{{ url_for('reportes.detalle_venta', pedido_id=pedido.id) }}">Ver detalle</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% elif dia_filtro %}
+        <p class="muted">No hay pedidos para ese dia.</p>
+    {% endif %}
+</div>
+{% endblock %}

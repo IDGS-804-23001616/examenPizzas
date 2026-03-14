@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}Inicio | Pizzeria Flask{% endblock %}
+
+{% block content %}
+<h1>Practica: Sistema de pedidos de pizzeria</h1>
+<p class="muted">Usa el menu para registrar pedidos y consultar reportes de ventas.</p>
+
+<div class="section">
+    <h2>Accesos rapidos</h2>
+    <ul>
+        <li><a href="{{ url_for('pedidos.nuevo_pedido') }}">Capturar nuevo pedido</a></li>
+        <li><a href="{{ url_for('reportes.ventas_por_dia') }}">Consultar ventas por dia</a></li>
+        <li><a href="{{ url_for('reportes.ventas_por_mes') }}">Consultar ventas por mes</a></li>
+    </ul>
+</div>
+{% endblock %}

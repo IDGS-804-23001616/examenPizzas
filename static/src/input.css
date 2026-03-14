@@ -1,0 +1,107 @@
+@import "tailwindcss";
+@plugin "flowbite/plugin";
+@source "../../node_modules/flowbite";
+
+/* Estilos base para mantener la estructura actual con apariencia tipo Flowbite. */
+@layer base {
+	body {
+		@apply bg-gray-50 text-gray-800 antialiased;
+	}
+
+	nav {
+		@apply mx-auto mt-6 mb-6 flex w-full max-w-6xl flex-wrap items-center gap-2 rounded-xl border border-gray-200 bg-white p-3 shadow-sm;
+	}
+
+	nav a {
+		@apply rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-blue-700;
+	}
+
+	h1 {
+		@apply mb-2 text-3xl font-bold text-gray-900;
+	}
+
+	h2 {
+		@apply mb-4 text-xl font-semibold text-gray-900;
+	}
+
+	table {
+		@apply mb-4 w-full rounded-lg text-left text-sm text-gray-600 shadow-sm;
+	}
+
+	thead {
+		@apply bg-gray-100 text-xs uppercase text-gray-700;
+	}
+
+	th,
+	td {
+		@apply border-b border-gray-200 px-4 py-3;
+	}
+
+	input,
+	select,
+	textarea {
+		@apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500;
+	}
+
+	button {
+		@apply rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300;
+	}
+
+	label {
+		@apply mb-2 block text-sm font-medium text-gray-900;
+	}
+}
+
+@layer components {
+	.container {
+		@apply mx-auto w-full max-w-6xl px-4 pb-8;
+	}
+
+	.section {
+		@apply mb-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm;
+	}
+
+	.muted {
+		@apply mb-4 text-sm text-gray-500;
+	}
+
+	.grid {
+		@apply grid gap-4 md:grid-cols-2 lg:grid-cols-3;
+	}
+
+	.field {
+		@apply mb-4;
+	}
+
+	.errors {
+		@apply mt-2 list-disc pl-5 text-sm text-red-600;
+	}
+
+	.total {
+		@apply mt-4 text-lg font-semibold text-gray-900;
+	}
+
+	.secondary {
+		@apply bg-gray-700 hover:bg-gray-800 focus:ring-gray-300;
+	}
+
+	.flash {
+		@apply mb-4 rounded-lg border p-4 text-sm;
+	}
+
+	.flash.success {
+		@apply border-green-300 bg-green-50 text-green-800;
+	}
+
+	.flash.error {
+		@apply border-red-300 bg-red-50 text-red-800;
+	}
+
+	.flash.warning {
+		@apply border-amber-300 bg-amber-50 text-amber-800;
+	}
+
+	.flash.info {
+		@apply border-blue-300 bg-blue-50 text-blue-800;
+	}
+}

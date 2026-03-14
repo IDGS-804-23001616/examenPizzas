@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+
+{% block title %}Nuevo pedido{% endblock %}
+
+{% block content %}
+<h1>Nuevo pedido</h1>
+<p class="muted">Agrega pizzas al detalle temporal y al final guarda el pedido completo.</p>
+
+<div class="section">
+    <h2>1) Datos de pizza</h2>
+    <form method="POST" novalidate>
+        <input type="hidden" name="accion" value="agregar">
+
+        <div class="grid">
+            <div class="field">
+                {{ pizza_form.tamano.label }}
+                {{ pizza_form.tamano() }}
+                {% if pizza_form.tamano.errors %}
+                    <ul class="errors">{% for error in pizza_form.tamano.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </div>
+
+            <div class="field">
+                {{ pizza_form.ingredientes.label }}
+                {{ pizza_form.ingredientes(placeholder='Ejemplo: pepperoni, champinones') }}
+                {% if pizza_form.ingredientes.errors %}
+                    <ul class="errors">{% for error in pizza_form.ingredientes.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </div>
+
+            <div class="field">
+                {{ pizza_form.cantidad.label }}
+                {{ pizza_form.cantidad() }}
+                {% if pizza_form.cantidad.errors %}
+                    <ul class="errors">{% for error in pizza_form.cantidad.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </div>
+        </div>
+
+        <button type="submit">Agregar</button>
+    </form>
+</div>
+
+<div class="section">
+    <h2>2) Detalle temporal</h2>
+    {% if detalles_temp %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Tamano</th>
+                    <th>Ingredientes</th>
+                    <th>Cantidad</th>
+                    <th>Precio unitario</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in detalles_temp %}
+                <tr>
+                    <td>{{ item.tamano|capitalize }}</td>
+                    <td>{{ item.ingredientes }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>${{ '%.2f'|format(item.precio_unitario) }}</td>
+                    <td>${{ '%.2f'|format(item.subtotal) }}</td>
+                    <td>
+                        <form method="POST">
+                            <input type="hidden" name="accion" value="quitar">
+                            {{ quitar_form.indice(value=loop.index0) }}
+                            <button type="submit" class="secondary">Quitar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="total">Total temporal: ${{ '%.2f'|format(total_temporal) }}</p>
+    {% else %}
+        <p class="muted">Aun no hay pizzas agregadas.</p>
+    {% endif %}
+</div>
+
+<div class="section">
+    <h2>3) Datos del cliente y terminar pedido</h2>
+    <form method="POST" novalidate>
+        <input type="hidden" name="accion" value="terminar">
+
+        <div class="grid">
+            <div class="field">
+                {{ cliente_form.nombre_completo.label }}
+                {{ cliente_form.nombre_completo() }}
+                {% if cliente_form.nombre_completo.errors %}
+                    <ul class="errors">{% for error in cliente_form.nombre_completo.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </div>
+
+            <div class="field">
+                {{ cliente_form.direccion.label }}
+                {{ cliente_form.direccion() }}
+                {% if cliente_form.direccion.errors %}
+                    <ul class="errors">{% for error in cliente_form.direccion.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </div>
+
+            <div class="field">
+                {{ cliente_form.telefono.label }}
+                {{ cliente_form.telefono() }}
+                {% if cliente_form.telefono.errors %}
+                    <ul class="errors">{% for error in cliente_form.telefono.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </div>
+
+            <div class="field">
+                {{ cliente_form.fecha_pedido.label }}
+                {{ cliente_form.fecha_pedido() }}
+                {% if cliente_form.fecha_pedido.errors %}
+                    <ul class="errors">{% for error in cliente_form.fecha_pedido.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </div>
+        </div>
+
+        <button type="submit">Terminar</button>
+    </form>
+</div>
+{% endblock %}
